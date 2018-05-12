@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Expenses Edit</title>
+    <title>Create Expenses</title>
     <style>
         input {
             font-size: 1rem;
@@ -11,9 +11,9 @@
 </head>
 <body>
 
-<h1>Expenses Edit</h1>
+<h1>Create Expenses</h1>
 
-<form action="{% url 'expenses:edit' expense.id %}" method="post">
+<form action="{% url 'expenses:new' %}" method="post">
     {% include './form.html' %}
 </form>
 

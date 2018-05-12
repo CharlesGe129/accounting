@@ -1,0 +1,33 @@
+{% csrf_token %}
+<h4>Name:</h4>
+<input name="name" value="{{ expense.name }}"><br>
+
+<h4>Type:</h4>
+<select name="type_id">
+    {% if expense.type_id == 1 %}
+        <option value="0">Expense</option>
+        <option value="1" selected>Income</option>
+    {% else %}
+        <option value="0" selected>Expense</option>
+        <option value="1">Income</option>
+    {% endif %}
+</select><br>
+
+<h4>Amount:</h4>
+<input name="amount" value="{{ expense.amount }}"><br>
+
+<h4>Category:</h4>
+<select name="category_id">
+    {% for category in categories %}
+        {% if expense.category_id == category.id %}
+            <option value="{{ category.id }}" selected>{{ category.name }}</option>
+        {% else %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endif %}
+    {% endfor %}
+</select><br>
+
+<h4>Comment:</h4>
+<input name="comment" value="{{ expense.comment }}"><br><br>
+
+<input type="submit" value="Submit">
