@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Expenses</title>
+</head>
+<body>
+
+<h1>Expenses</h1>
+<h1>This month: {{ sum }}</h1>
+<h1>Average: {{ avg }}</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Comment</th>
+        <th>CreatedAt</th>
+        <th colspan="2"></th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% for expense in expenses %}
+    <tr>
+        <td>{{ expense.name }}</td>
+        <td>{{ expense.type }}</td>
+        <td>{{ expense.amount }}</td>
+        <td>{{ expense.category.name }}</td>
+        <td>{{ expense.comment }}</td>
+        <td>{{ expense.created_at }}</td>
+        <td><a href="/expenses/{{ expense.name }}/edit">edit</a></td>
+        <td><a href="/expenses/{{ expense.name }}/delete">delete</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</body>
+</html>

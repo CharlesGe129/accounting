@@ -1,14 +1,17 @@
 from django.db import models
 
 
-class Categories(models.Model):
+class Category(models.Model):
     id = models.AutoField(primary_key=True, max_length=20)
     name = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
 
+    class Meta:
+        db_table = 'categories'
 
-class Expenses(models.Model):
+
+class Expense(models.Model):
     id = models.AutoField(primary_key=True, max_length=20)
     name = models.CharField(max_length=255)
     type_id = models.IntegerField()
@@ -16,4 +19,7 @@ class Expenses(models.Model):
     comment = models.CharField(max_length=255)
     created_at = models.DateTimeField()
     updated_at = models.DateTimeField()
-    category_id = models.ForeignKey(Categories, on_delete=models.DO_NOTHING)
+    category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
+
+    class Meta:
+        db_table = 'expenses'
