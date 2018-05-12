@@ -1,10 +1,11 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import Expense
+import datetime
 
 
 def index(request):
-    expenses = Expense.objects.order_by('id')
+    month = datetime.datetime.today().strftime('%Y-%m')
+    expenses = Expense.objects.filter(created_at__startswith=month)
     context = index_form(expenses)
     return render(request, 'expenses/index.html', context)
 
