@@ -25,7 +25,12 @@ def edit(request, expense_id):
     if request.method == 'POST':
         edit_expense(request.POST, Expense.objects.filter(id=expense_id)[0])
         msg = 'Expense updated successfully'
-    return redirect('/expenses')
+        return redirect('/expenses')
+    return render(request, 'expenses/edit.html', edit_context(expense_id), msg)
+
+
+def edit_context(expense_id, msg=''):
+    return {'expense': Expense.objects.filter(id=expense_id)[0], 'categories': Category.objects.all(), 'msg': msg}
 
 
 def edit_expense(params, expense):
