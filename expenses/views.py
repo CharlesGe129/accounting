@@ -47,7 +47,6 @@ def new(request):
         return render(request, 'expenses/new.html', {'categories': Category.objects.all()})
     elif request.method == 'POST':
         params = request.POST
-        print(params)
         expense = Expense(name=params['name'], amount=params['amount'], type_id=params['type_id'],
                           comment=params['comment'], category=Category.objects.filter(id=params['category_id'])[0])
         expense.save()

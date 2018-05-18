@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stats</title>
+</head>
+<body>
+
+<h1>Stats</h1>
+
+<table style="border-spacing: 10px; text-align: center;">
+    <thead>
+    <tr>
+        <th>Month</th>
+        <th>Total expenses</th>
+        <th>Details</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    {% for month, stat in stats.items %}
+    <tr>
+        <td>{{ month }}</td>
+        <td>{{ stat.sum }}</td>
+        <td>
+            <table style="border-spacing: 10px; text-align: center; border: solid;">
+                <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Expenses</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                {% for name, amount in stat.details %}
+                <tr>
+                    <td>{{ name }}</td>
+                    <td>{{ amount }}</td>
+                </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </td>
+    </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+</body>
+</html>
