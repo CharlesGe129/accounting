@@ -16,7 +16,7 @@ def index_context(expenses):
         expense.type = 'Expense' if expense.type_id == 0 else 'Income'
         sum_expense += expense.amount if expense.type_id == 0 else -expense.amount
         expense.created_at = expense.created_at.strftime('%Y-%m-%d %H:%M:%S')
-    avg_expense = sum_expense / int(datetime.datetime.today().strftime('%m'))
+    avg_expense = sum_expense / int(datetime.datetime.today().strftime('%d'))
     return {'expenses': expenses, 'sum': sum_expense, 'avg': round(avg_expense, 2)}
 
 
