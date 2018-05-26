@@ -3,7 +3,10 @@ from expenses.models import Expense, Category
 
 
 def index(request):
-    expenses = Expense.objects.all().order_by('-created_at')
+    exclude_cat = [each for each in request.GET.get('cat').split(',')] if request.GET.get('cat') is not None else []
+    expenses = Expense.objects.all()\
+        .exclude(category__in=Category.objects.filter(id__in=exclude_cat))\
+        .order_by('-created_at')
     return render(request, 'stats/index.html', index_context(expenses))
 
 

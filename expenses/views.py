@@ -4,8 +4,11 @@ import datetime
 
 
 def index(request):
+    exclude_cat = [each for each in request.GET.get('cat').split(',')] if request.GET.get('cat') is not None else []
     month = datetime.datetime.today().strftime('%Y-%m')
-    expenses = Expense.objects.filter(created_at__startswith=month)
+    expenses = Expense.objects\
+        .filter(created_at__startswith=month)\
+        .exclude(category__in=Category.objects.filter(id__in=exclude_cat))
     context = index_context(expenses)
     return render(request, 'expenses/index.html', context)
 
