@@ -37,9 +37,10 @@ def edit_context(expense_id, msg=''):
 
 
 def edit_expense(params, expense):
+    amount = sum(list(map(float, params['amount'].split(', '))))
     expense.name = params['name']
-    expense.amount = params['amount']
-    expense.amount_fake = params['amount_fake'] if params['amount_fake'] else float(params['amount']) * 1.2
+    expense.amount = amount
+    expense.amount_fake = params['amount_fake'] if params['amount_fake'] else amount * 1.2
     expense.type_id = params['type_id']
     expense.comment = params['comment']
     expense.category = Category.objects.filter(id=params['category_id'])[0]
@@ -51,8 +52,9 @@ def new(request):
         return render(request, 'expenses/new.html', {'categories': Category.objects.all()})
     elif request.method == 'POST':
         params = request.POST
-        expense = Expense(name=params['name'], amount=params['amount'],
-                          amount_fake=params['amount_fake'] if params['amount_fake'] else float(params['amount']) * 1.2
+        amount = sum(list(map(float, params['amount'].split(', '))))
+        expense = Expense(name=params['name'], amount=amount,
+                          amount_fake=params['amount_fake'] if params['amount_fake'] else amount * 1.2
                           , type_id=params['type_id'], comment=params['comment'],
                           category=Category.objects.filter(id=params['category_id'])[0])
         expense.save()
