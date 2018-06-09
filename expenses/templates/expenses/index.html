@@ -8,8 +8,10 @@
 
 <h1>Expenses</h1>
 <a href="{% url 'expenses:new' %}" style="font-size: 1rem;">Add new</a>
-<h1>This month: {{ sum }}</h1>
-<h1>Average: {{ avg }}</h1>
+<h1 style="color: red">Sum expense: {{ sum_ex }}</h1>
+<h1 style="color: red">Average expense: {{ avg_ex }}</h1>
+<h1>Sum income: {{ sum_in }}</h1>
+<h1>Average income: {{ avg_in }}</h1>
 
 <table style="border-spacing: 10px; text-align: center;">
     <thead>

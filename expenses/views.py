@@ -15,12 +15,18 @@ def index(request):
 
 def index_context(expenses):
     sum_expense = 0
+    sum_income = 0
     for expense in expenses:
         expense.type = 'Expense' if expense.type_id == 0 else 'Income'
-        sum_expense += expense.amount if expense.type_id == 0 else -expense.amount
+        if expense.type_id == 0:
+            sum_expense += expense.amount
+        else:
+            sum_income += expense.amount
         expense.created_at = expense.created_at.strftime('%Y-%m-%d %H:%M:%S')
     avg_expense = sum_expense / int(datetime.datetime.today().strftime('%d'))
-    return {'expenses': expenses, 'sum': sum_expense, 'avg': round(avg_expense, 2)}
+    avg_income = sum_income / int(datetime.datetime.today().strftime('%d'))
+    return {'expenses': expenses, 'sum_ex': sum_expense, 'avg_ex': round(avg_expense, 2),
+            'sum_in': sum_income, 'avg_in': round(avg_income, 2)}
 
 
 def edit(request, expense_id):
