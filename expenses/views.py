@@ -46,10 +46,11 @@ def edit_expense(params, expense):
     amount = sum(list(map(float, params['amount'].split(', '))))
     expense.name = params['name']
     expense.amount = amount
-    expense.amount_fake = params['amount_fake'] if params['amount_fake'] else amount * 1.2
+    expense.amount_fake = params['amount_fake']
     expense.type_id = params['type_id']
     expense.comment = params['comment']
     expense.category = Category.objects.filter(id=params['category_id'])[0]
+    expense.cal_amount_fake()
     expense.save()
 
 
@@ -60,8 +61,8 @@ def new(request):
         params = request.POST
         amount = sum(list(map(float, params['amount'].split(', '))))
         expense = Expense(name=params['name'], amount=amount,
-                          amount_fake=params['amount_fake'] if params['amount_fake'] else amount * 1.2
-                          , type_id=params['type_id'], comment=params['comment'],
+                          amount_fake=params['amount_fake'], type_id=params['type_id'], comment=params['comment'],
                           category=Category.objects.filter(id=params['category_id'])[0])
+        expense.cal_amount_fake()
         expense.save()
         return redirect('/expenses')
