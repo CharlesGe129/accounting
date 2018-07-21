@@ -31,15 +31,16 @@ def index_context(expenses):
 
 def edit(request, expense_id):
     msg = ''
+    expense = Expense.objects.filter(id=expense_id)[0]
     if request.method == 'POST':
-        edit_expense(request.POST, Expense.objects.filter(id=expense_id)[0])
+        edit_expense(request.POST, expense)
         msg = 'Expense updated successfully'
         return redirect('/expenses')
-    return render(request, 'expenses/edit.html', edit_context(expense_id), msg)
+    return render(request, 'expenses/edit.html', edit_context(expense), msg)
 
 
-def edit_context(expense_id, msg=''):
-    return {'expense': Expense.objects.filter(id=expense_id)[0], 'categories': Category.objects.all(), 'msg': msg}
+def edit_context(expense, msg=''):
+    return {'expense': expense, 'categories': Category.objects.all(), 'msg': msg}
 
 
 def edit_expense(params, expense):
