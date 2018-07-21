@@ -22,6 +22,13 @@ class Expense(models.Model):
     updated_at = models.DateTimeField(auto_now=True, editable=False, null=False, blank=False)
     category = models.ForeignKey(Category, on_delete=models.DO_NOTHING)
 
+    @staticmethod
+    def create(name, category_id, amount=0, type_id=0, amount_fake=None, comment=''):
+        e = Expense(name=name, amount=amount, amount_fake=amount_fake, type_id=type_id, comment=comment,
+                    category=Category.objects.filter(id=category_id)[0])
+        e.cal_amount_fake()
+        e.save()
+
     def cal_amount_fake(self):
         if self.category.name == 'Exchange for RMB':
             self.amount_fake = 0

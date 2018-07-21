@@ -61,9 +61,6 @@ def new(request):
     elif request.method == 'POST':
         params = request.POST
         amount = sum(list(map(float, params['amount'].split(', '))))
-        expense = Expense(name=params['name'], amount=amount,
-                          amount_fake=params['amount_fake'], type_id=params['type_id'], comment=params['comment'],
-                          category=Category.objects.filter(id=params['category_id'])[0])
-        expense.cal_amount_fake()
-        expense.save()
+        Expense.create(params['name'], params['category_id'], amount=amount, amount_fake=params['amount_fake'],
+                       type_id=params['type_id'], comment=params['comment'])
         return redirect('/expenses')
