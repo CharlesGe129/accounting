@@ -31,7 +31,7 @@ def index_context(expenses):
 
 def edit(request, expense_id):
     msg = ''
-    expense = Expense.objects.filter(id=expense_id)[0]
+    expense = Expense.objects.get(id=expense_id)
     if request.method == 'POST':
         edit_expense(request.POST, expense)
         msg = 'Expense updated successfully'
@@ -50,7 +50,7 @@ def edit_expense(params, expense):
     expense.amount_fake = params['amount_fake']
     expense.type_id = params['type_id']
     expense.comment = params['comment']
-    expense.category = Category.objects.filter(id=params['category_id'])[0]
+    expense.category = Category.objects.get(id=params['category_id'])
     expense.cal_amount_fake()
     expense.save()
 

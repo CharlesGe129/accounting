@@ -39,3 +39,20 @@ class ExpenseViewTests(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['sum_ex'], 15)
         self.assertEqual(response.context['sum_in'], 0)
+
+    def test_index_post(self):
+        def test_new():
+            self.assertEqual(len(Expense.objects.filter(name='yogurt')), 0, 'Create expense initialization failed!!')
+            self.client.post(reverse('expenses:new'), {'name': 'yogurt', 'type_id': 0, 'amount': '4',
+                                                       'amount_fake': '', 'comment': '', 'category_id': 1})
+            self.assertEqual(len(Expense.objects.filter(name='yogurt')), 1, 'Create expense failed!')
+
+        def test_edit():
+            url = reverse('expenses:edit', args=(Expense.objects.get(name='yogurt').id, ))
+            self.client.post(url, {'name': 'yogurt', 'type_id': 0, 'amount': '3', 'amount_fake': '',
+                                   'comment': '', 'category_id': 1})
+            self.assertEqual(Expense.objects.get(name='yogurt').amount, 3, 'Edit expense failed!')
+
+        test_new()
+        test_edit()
+
